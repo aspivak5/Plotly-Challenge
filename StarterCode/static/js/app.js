@@ -24,7 +24,7 @@ function metadatachart(sample){
         });
     });
 };
-metadatachart(944);
+//metadatachart(944);
 
 //build function for buildings all charts
 function buildCharts(sample){
@@ -50,7 +50,43 @@ function buildCharts(sample){
 
         Plotly.newPlot("bar",barData)
 
+        var bubbleData =[{
+            x: otu_ids,
+            y:sample_values,
+            mode: "markers",
+            marker: {size:sample_values, color:otu_ids,colorscale:"Portland"},
+            text: otu_labels
+        }];
+        var bubbleLayout = {
+            xaxis:{title:"OTU ID"}
+        }
+        Plotly.newPlot("bubble", bubbleData,bubbleLayout)
+
 
     })
 }
-buildCharts(941)
+//buildCharts(941)
+
+
+function init(){
+    var dropdown = d3.select("#selDataset");
+
+    d3.json("samples.json").then(data =>{
+        var sampleNames = data.names
+
+        sampleNames.forEach((sample)=>{
+            dropdown.append("option").text(sample).property("value",sample)
+        });
+
+        var sampledata = sampleNames[0];
+        buildCharts(sampledata);
+        metadatachart(sampledata)
+    });
+};
+
+function optionChanged(newsample){
+    metadatachart(newsample);
+    buildCharts(newsample)
+}
+
+init()
