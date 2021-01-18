@@ -4,7 +4,7 @@ function retreiveData() {
         console.log(data)
     });
     };
-retreiveData();
+retreiveData()
 
 function metadatachart(sample){
     d3.json("samples.json").then(data=>{
@@ -80,13 +80,13 @@ function init(){
 
         var sampledata = sampleNames[0];
         buildCharts(sampledata);
-        metadatachart(sampledata)
+        metadatachart(sampledata);
     });
 };
 
 function optionChanged(newsample){
     metadatachart(newsample);
-    buildCharts(newsample)
+    buildCharts(newsample);
 }
 
 init()
