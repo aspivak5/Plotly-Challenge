@@ -6,19 +6,22 @@ function retreiveData() {
     };
 retreiveData()
 
+//create a function for demographic info
 function metadatachart(sample){
     d3.json("samples.json").then(data=>{
+        // select object for metadata
         var metadata = data.metadata
         console.log(metadata)
-
+        // filter the data so that it matches the sample
         var filtersample = metadata.filter(row => row.id == sample);
+        // take the first sample
         var result = filtersample[0];
         console.log(result)
-
+        // use d3 and get the id for metadata
         var demoinfo = d3.select("#sample-metadata");
-
+        // remove the existing data in html so that it doesnt add
         demoinfo.html("");
-
+        // add the key, value pair for each sample to the demoinfo chart
         Object.entries(result).forEach(([key,value])=>{
             demoinfo.append("p").text(`${key}: ${value}`)
         });
@@ -66,7 +69,6 @@ function buildCharts(sample){
     })
 }
 //buildCharts(941)
-
 
 function init(){
     var dropdown = d3.select("#selDataset");
