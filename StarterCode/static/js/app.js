@@ -32,17 +32,19 @@ function metadatachart(sample){
 //build function for buildings all charts
 function buildCharts(sample){
     d3.json("samples.json").then(data =>{
+        // select the object with the data to build charts with 
         var sampledata = data.samples
-
+        // filter the data so that it matches the sample
         var filtersample = sampledata.filter(row => row.id == sample);
+        // take the first sample
         var result = filtersample[0];
         console.log(result)
-
+        // assign the data going to use to variables 
         var otu_ids = result.otu_ids;
         var otu_labels = result.otu_labels;
         var sample_values = result.sample_values;
         console.log(otu_ids)
-
+        //build hbar chart
         var barData =[{
             x: sample_values.slice(0,10).reverse(),
             y: otu_ids.slice(0, 10).map(id=> `OTU ${id}`).reverse(),
@@ -52,7 +54,7 @@ function buildCharts(sample){
         }];
 
         Plotly.newPlot("bar",barData)
-
+        // build bubble chart
         var bubbleData =[{
             x: otu_ids,
             y:sample_values,
@@ -70,22 +72,25 @@ function buildCharts(sample){
 }
 //buildCharts(941)
 
+// create an init function to run all code
 function init(){
+    // use d3 to select the dropdownmenu
     var dropdown = d3.select("#selDataset");
-
+    // use d3 to grab the object thats going to be used
     d3.json("samples.json").then(data =>{
         var sampleNames = data.names
-
+        // add each sample to their own option tag 
         sampleNames.forEach((sample)=>{
             dropdown.append("option").text(sample).property("value",sample)
         });
-
+        // build charts with the sample data
         var sampledata = sampleNames[0];
         buildCharts(sampledata);
         metadatachart(sampledata);
     });
 };
 
+//create function that will build a new chart whenever a new sample is selected
 function optionChanged(newsample){
     metadatachart(newsample);
     buildCharts(newsample);
