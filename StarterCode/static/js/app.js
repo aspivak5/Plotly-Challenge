@@ -84,8 +84,8 @@ function buildCharts(sample){
               gauge: {
                 axis: { range: [null, 10] },
                 steps: [
-                  { range: [0, 5], color: "lightblue" },
-                  { range: [5, 10], color: "darkblue" }
+                  { range: [0, 5], color: "cyan" },
+                  { range: [5, 10], color: "royalblue" }
                 ],
                 threshold: {
                   line: { color: "red", width: 4 },
@@ -96,10 +96,9 @@ function buildCharts(sample){
             }
           ];
           
-          var gaugelayout = { width: 500, height: 450, margin: { t: 0, b: 0 } };
+          var gaugelayout = { width: 500, height: 450, margin: {t: 0, b: 0  }};
           Plotly.newPlot('gauge', gaugedata, gaugelayout);
   
-
 
     })
 }
