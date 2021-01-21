@@ -66,6 +66,39 @@ function buildCharts(sample){
             xaxis:{title:"OTU ID"}
         }
         Plotly.newPlot("bubble", bubbleData,bubbleLayout)
+    
+        //build gauge chart
+
+        var washfreq = data.metadata
+        var filterfreq = washfreq.filter(row => row.id == sample);
+        var resultfreq = filterfreq[0]
+        var wfreq = resultfreq.wfreq
+
+        var gaugedata = [
+            {
+              domain: { x: [0, 1], y: [0, 1] },
+              value: wfreq,
+              title: { text: "Scrubs per Week" },
+              type: "indicator",
+              mode: "gauge+number",
+              gauge: {
+                axis: { range: [null, 10] },
+                steps: [
+                  { range: [0, 5], color: "lightblue" },
+                  { range: [5, 10], color: "darkblue" }
+                ],
+                threshold: {
+                  line: { color: "red", width: 4 },
+                  thickness: 0.75,
+                  value: wfreq
+                }
+              }
+            }
+          ];
+          
+          var gaugelayout = { width: 500, height: 450, margin: { t: 0, b: 0 } };
+          Plotly.newPlot('gauge', gaugedata, gaugelayout);
+  
 
 
     })
