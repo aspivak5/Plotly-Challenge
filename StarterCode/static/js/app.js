@@ -69,10 +69,10 @@ function buildCharts(sample){
     
         //build gauge chart
 
-        var washfreq = data.metadata
-        var filterfreq = washfreq.filter(row => row.id == sample);
-        var resultfreq = filterfreq[0]
-        var wfreq = resultfreq.wfreq
+        var metadata = data.metadata
+        var filterwfreq = metadata.filter(row => row.id == sample);
+        var resultwfreq = filterwfreq[0]
+        var wfreq = resultwfreq.wfreq
 
         var gaugedata = [
             {
