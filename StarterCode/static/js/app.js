@@ -9,7 +9,7 @@ retreiveData()
 //create a function for demographic info
 function metadatachart(sample){
     d3.json("samples.json").then(data=>{
-        // select object for metadata
+        // select object to build demo info
         var metadata = data.metadata
         console.log(metadata)
         // filter the data so that it matches the sample
@@ -19,7 +19,7 @@ function metadatachart(sample){
         console.log(result)
         // use d3 and get the id for metadata
         var demoinfo = d3.select("#sample-metadata");
-        // remove the existing data in html so that it doesnt add
+        // remove the existing data in html so that it doesnt add on top of eachother
         demoinfo.html("");
         // add the key, value pair for each sample to the demoinfo chart
         Object.entries(result).forEach(([key,value])=>{
@@ -30,7 +30,7 @@ function metadatachart(sample){
 //metadatachart(944);
 
 //build function for buildings all charts
-function buildCharts(sample){
+function createCharts(sample){
     d3.json("samples.json").then(data =>{
         // select the object with the data to build charts with 
         var sampledata = data.samples
@@ -39,7 +39,7 @@ function buildCharts(sample){
         // take the first sample
         var result = filtersample[0];
         console.log(result)
-        // assign the data going to use to variables 
+        // assign the keys to own variable 
         var otu_ids = result.otu_ids;
         var otu_labels = result.otu_labels;
         var sample_values = result.sample_values;
@@ -69,6 +69,7 @@ function buildCharts(sample){
     
         //build gauge chart
 
+        //select the object with the data to build gaugechart
         var metadata = data.metadata
         var filterwfreq = metadata.filter(row => row.id == sample);
         var resultwfreq = filterwfreq[0]
@@ -78,7 +79,7 @@ function buildCharts(sample){
             {
               domain: { x: [0, 1], y: [0, 1] },
               value: wfreq,
-              title: { text: "Scrubs per Week" },
+              title: { text:  "Scrubs per Week" },
               type: "indicator",
               mode: "gauge+number",
               gauge: {
@@ -117,7 +118,7 @@ function init(){
         });
         // build charts with the sample data
         var sampledata = sampleNames[0];
-        buildCharts(sampledata);
+        createCharts(sampledata);
         metadatachart(sampledata);
     });
 };
@@ -125,7 +126,7 @@ function init(){
 //create function that will build a new chart whenever a new sample is selected
 function optionChanged(newsample){
     metadatachart(newsample);
-    buildCharts(newsample);
+    createCharts(newsample);
 }
 
 init()
